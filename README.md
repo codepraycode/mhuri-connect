@@ -1,4 +1,4 @@
-# Oila-connect
+# Oila connect - Who know who know you?
 An exclusive web app to check connections within a group of people (a family).
 
 ## Overview
