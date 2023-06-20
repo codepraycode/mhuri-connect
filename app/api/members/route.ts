@@ -1,15 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server';
 import { connectToDb } from '@utils/database';
-import Member, { IMember } from '@models/member';
+import Member from '@models/member';
 import {ReqResponse} from '../responses';
 import { Types } from 'mongoose';
+import { ClaimsSubmit, LoadUser, User } from '@helpers/server';
 
-
-
-type ClaimsSubmit = {
-    id: string,
-    claims: readonly [ string ]
-}
 
 export const GET = async() => {
 
@@ -53,9 +48,10 @@ export const POST = async(req: NextRequest) => {
     }
 
     // Load user
-    let user: IMember | null;
+    let user: User;
+
     try {
-        user = await Member.findById(id).exec();
+        user = await LoadUser(id);
     } catch(err) {
         const message = "Could not load member";
         return ReqResponse(null, { message }, 500, message)
@@ -70,7 +66,21 @@ export const POST = async(req: NextRequest) => {
     const filteredClaims = claims.filter((e)=>e != user?._id).map((e)=> e as unknown as Types.ObjectId);
 
     // Update user knows
-    user.knows = filteredClaims;
+    user.claims = filteredClaims;
+
+    let members = await Member.find()
+        // .where("claims")
+        .exec();
+    
+    const total = members.length;
+    const members_who_knows_user = members.filter((e)=>e.claims.includes(user?._id));
+
+    // calculate stats
+    user.stats = {
+        knows: filteredClaims.length,
+        known: members_who_knows_user.length,
+        connections: total - Math.min(filteredClaims.length, members_who_knows_user.length)
+    };
 
     // Save
     await user.save();

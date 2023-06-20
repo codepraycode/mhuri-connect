@@ -1,4 +1,4 @@
-import { InferSchemaType, Schema, model, models } from 'mongoose';
+import { InferSchemaType, Schema, model,Types, models } from 'mongoose';
 
 
 // interface IMember {
@@ -13,6 +13,21 @@ import { InferSchemaType, Schema, model, models } from 'mongoose';
 //     knows: [Types.ObjectId]
 // }
 
+
+const Stats = new Schema({
+    knows: {
+        type: Schema.Types.Number,
+        default: 0
+    },
+    known: {
+        type: Schema.Types.Number,
+        default: 0
+    },
+    connections: {
+        type: Schema.Types.Number,
+        default: 0
+    },
+})
 
 const MemberSchema = new Schema({
     firstname: {
@@ -59,9 +74,10 @@ const MemberSchema = new Schema({
         type: Schema.Types.Boolean,
         default: false,
     },
-    knows: { // Ids of people a user knows
+    claims: { // Ids of people a user knows
         type: [{ type: Schema.Types.ObjectId, ref: 'Member' }],
     },
+    stats: Stats,
 });
 
 type IMemberSchema = InferSchemaType<typeof MemberSchema>;
