@@ -1,4 +1,17 @@
-import { Schema, model, models } from 'mongoose';
+import { InferSchemaType, Schema, model, models } from 'mongoose';
+
+
+// interface IMember {
+//     firstname: string,
+//     lastname: string,
+//     username: string,
+//     email: string,
+//     contact: string,
+//     password: string,
+//     dateOfBirth: Date,
+//     isAdmin: boolean,
+//     knows: [Types.ObjectId]
+// }
 
 
 const MemberSchema = new Schema({
@@ -47,10 +60,11 @@ const MemberSchema = new Schema({
         default: false,
     },
     knows: { // Ids of people a user knows
-        type: [Schema.Types.ObjectId],
-        default: [],
+        type: [{ type: Schema.Types.ObjectId, ref: 'Member' }],
     },
 });
+
+type IMember = InferSchemaType<typeof MemberSchema>;
 
 const Member = models.Member || model('Member', MemberSchema);
 export default Member;
