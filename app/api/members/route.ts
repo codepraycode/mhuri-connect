@@ -1,7 +1,15 @@
+import { NextRequest, NextResponse } from 'next/server'
 import { connectToDb } from '@utils/database';
-import Member from '@models/member';
+import Member, { IMember } from '@models/member';
 import {ReqResponse} from '../responses';
+import { Types } from 'mongoose';
 
+
+
+type ClaimsSubmit = {
+    id: string,
+    claims: readonly [ string ]
+}
 
 export const GET = async() => {
 
@@ -30,19 +38,43 @@ export const GET = async() => {
     return ReqResponse(members, null);
 }
 
-export const POST = async(req: Request) => {
+export const POST = async(req: NextRequest) => {
 
     // Get userId, and array of id of other users from claim
-    const { id, claims } = await req.json();
+    const { id, claims }:ClaimsSubmit = await req.json();
 
-    // Connect to database.
+    // Connect to database
+    try {
+        await connectToDb();
+    } catch(err) {
+        const message = "Storage error";
+        console.log("MOGODB ERROR:> could not connect to DB", err);
+        return ReqResponse(null, { message }, 500, message)
+    }
 
-    // load all members, excluding current authenticated user.
-    //  along side their connections.
+    // Load user
+    let user: IMember | null;
+    try {
+        user = await Member.findById(id).exec();
+    } catch(err) {
+        const message = "Could not load member";
+        return ReqResponse(null, { message }, 500, message)
+    }
+    
+    if (!user) {
+        const message = "Member not found"
+        return ReqResponse(null, { message }, 400, message)
+    }
+
+    // Check if the user's id is not included in the claims, remove if there
+    const filteredClaims = claims.filter((e)=>e != user?._id).map((e)=> e as unknown as Types.ObjectId);
 
     // Update user knows
+    user.knows = filteredClaims;
+
+    // Save
+    await user.save();
 
     // Return all the members
-
-    return ReqResponse({id, claims}, null);
+    return ReqResponse(user, null);
 }

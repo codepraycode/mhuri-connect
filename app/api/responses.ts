@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server'
+
 type Payload = null | object | string;
 
 export interface RequestResponse {
@@ -8,7 +10,7 @@ export interface RequestResponse {
 }
 
 
-export const ReqResponse = (data: Payload = {}, error: Payload = null, status:number = 200, statusText:string = "Ok"): Response => {
+export const ReqResponse = (data: Payload = {}, error: Payload = null, status:number = 200, statusText:string = "Ok"): NextResponse => {
 
     const resData: RequestResponse = {
         status,
@@ -17,5 +19,5 @@ export const ReqResponse = (data: Payload = {}, error: Payload = null, status:nu
         error
     }
 
-    return new Response(JSON.stringify(resData), { status })
+    return new NextResponse(JSON.stringify(resData), { status })
 }

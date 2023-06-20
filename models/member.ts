@@ -43,7 +43,7 @@ const MemberSchema = new Schema({
         type: String,
         validate:{
             validator: function(v: string) {
-                return /\d{3}-\d{3}-\d{4}/.test(v);
+                return /\d{11}/.test(v);
             },
             message: (props: { value: string}) => `${props.value} is not a valid phone number!`
         }
@@ -64,7 +64,12 @@ const MemberSchema = new Schema({
     },
 });
 
-type IMember = InferSchemaType<typeof MemberSchema>;
+type IMemberSchema = InferSchemaType<typeof MemberSchema>;
+
+export interface IMember extends IMemberSchema {
+    _id?: string,
+    save: ()=> Promise<void>
+}
 
 const Member = models.Member || model('Member', MemberSchema);
 export default Member;
