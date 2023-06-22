@@ -64,30 +64,6 @@
   gap: 0.5rem;
 }
 
-.card {
-  
-  
-  
-  transition: background 200ms, border 200ms;
-}
-
-.card span {
-  display: inline-block;
-  transition: transform 200ms;
-}
-
-.card h2 {
-  font-weight: 600;
-  margin-bottom: 0.7rem;
-}
-
-.card p {
-  margin: 0;
-  opacity: 0.6;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  max-width: 30ch;
-}
 
 
 .cardd {
@@ -106,6 +82,19 @@
 	justify-content: space-between;
 }
 
+.cardd>div:first-child {
+	height: 120px;
+	aspect-ratio: 1;
+	max-width: 90%;
+	margin-inline: auto;
+
+	border-radius: 50%;
+	animation: shine-loading-image 2s infinite ease-out;
+
+	background: rgba(var(--card-border-rgb), 30%);
+	overflow: hidden;
+}
+
 .cardd_loading > div:first-child,
 .cardd_loading span {
 	background: rgba(var(--card-border-rgb), 30%);
@@ -115,38 +104,45 @@
 	background-size: 250px;
 }
 
-.cardd > div:first-child {
-	height: 130px;
-	aspect-ratio: 1;
-	max-width: 90%;
-	margin-inline: auto;
-
-	border-radius: 50%;
-	animation: shine-loading-image 2s infinite ease-out;
-}
-
 .cardd > div:last-child {
 	display: inherit;
 	flex-direction: column;
 	gap: .5rem;
 }
 
+.cardd_loading span {
+	border-radius: 10px;
+}
+
 .cardd span {
 	display: block;
-	width: 80%;
-	height: 12px;
-	border-radius: 10px;
-	/* -webkit-animation: shine-loading-container-items 2s infinite ease-out; */
+	width: 90%;
+	min-height: 12px;
 	animation: shine-loading-container-items 2s infinite ease-out;
+}
+
+.lt {
+	font-weight: 600;
+	margin-top: 0.7rem;
+	padding: 0;
+}
+
+.pt {
+	margin: 0;
+	opacity: 0.6;
+	font-size: 0.7rem;
 }
 
 .bottom{
 	display:flex;
-	gap: .4rem
+	align-items: center;
+	/* gap: .4rem; */
 }
 
 .bottom span {
-	width: 70px;
+	min-width: 70px;
+	width: fit-content;
+	/* background-color: red; */
 }
 
 @keyframes shine-loading-image {
