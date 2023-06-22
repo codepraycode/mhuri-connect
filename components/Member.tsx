@@ -4,30 +4,6 @@ import Image from 'next/image'
 import { IMember } from '@models/member';
 import { GridDisplay } from './DisplayWrappers';
 
-export const NoMembers = ({reload}: {reload: ()=>void}) => {
-    return (
-        <div className={styles.noMembers}>
-            <div>
-                <Image
-                    src="/users.svg"
-                    alt="users template image"
-                    className={"image"}
-                    width={200}
-                    height={200}
-                    priority
-                />
-            </div>
-
-            <div>
-                <h1>No Members</h1>
-
-                <span className={styles.nav} onClick={reload}>Load again</span>
-            </div>
-
-        </div>
-    )
-}
-
 interface MemberCardProps {
     members: readonly IMember[]
 }

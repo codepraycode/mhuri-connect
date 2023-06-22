@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
-import MemberCard, {NoMembers} from '@components/Member';
+import MemberCard from '@components/Member';
 import styles from '@styles/page.module.css';
 import { IMember } from '@models/member';
 import { LoadingMembers } from '@components/Loaders';
+import { PassiveError } from '@components/errors';
 
 export default function Home() {
 
@@ -20,7 +21,7 @@ export default function Home() {
 			const res = await fetch('/api/members');
 			const res_data = await res.json()
 			// console.log(JSON.stringify(data, null, 4));
-			setMembers(()=>res_data.status === 200 ? res_data.data : [])
+			// setMembers(()=>res_data.status === 200 ? res_data.data : [])
 
 			setLoading(false);
 		})()
@@ -31,10 +32,16 @@ export default function Home() {
 	
 	if (thereIsError) template = <h3>Error Occured!</h3>
     else if (!loading) template = members.length < 1 ? 
-		<NoMembers reload={()=>{
-			setLoading(true)
-			setMembers(()=>[])
-		}}/> : <MemberCard members={members}/>;
+		<PassiveError 
+			title='No Members!'
+			icon="/users.svg"
+			message='No members registered yet!'
+			ctaText='Load again'
+			reload={()=>{
+				setLoading(true)
+				setMembers(()=>[])
+			}}
+		/> : <MemberCard members={members}/>;
 		
 	return (
 		<main className={styles.main}>
