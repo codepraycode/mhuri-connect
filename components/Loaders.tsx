@@ -26,7 +26,7 @@ export const LoadingMembers = () =>{
         <GridDisplay>
             {
                 ([1, 2, 3, 4, 5, 6, 7, 8]).map((e) => (
-                    <LoadingTemplate/>
+                    <LoadingTemplate key={e}/>
                 ))
             }
         </GridDisplay>
