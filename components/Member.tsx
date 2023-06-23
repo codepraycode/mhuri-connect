@@ -6,7 +6,7 @@ import { MemberCardProps } from '@utils/types';
 
 
 
-const MemberCard = ({members, isAdmin}: MemberCardProps) => {
+const MemberCard = ({members, isAdmin, selections, onSelect}: MemberCardProps) => {
 
     return (
         <GridDisplay>
@@ -14,8 +14,9 @@ const MemberCard = ({members, isAdmin}: MemberCardProps) => {
                 members.map((member) => {
                     return (
                         <div
-                            className={styles.cardd}
+                            className={`${styles.cardd} ${styles.selectable} ${selections.includes((member._id as string)) ? styles.selected: ''}`}
                             key={member._id}
+                            onClick={()=>onSelect((member._id as string))}
                         >
                             <div>
                                 <Image

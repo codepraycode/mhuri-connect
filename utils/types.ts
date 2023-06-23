@@ -11,7 +11,9 @@ export type PayloadError = null | {
 
 export interface MemberCardProps {
     members: readonly IMember[],
-    isAdmin?: boolean
+    isAdmin?: boolean,
+    selections: string[],
+    onSelect:(id:string)=>void
 }
 
 export interface LoaderProps {

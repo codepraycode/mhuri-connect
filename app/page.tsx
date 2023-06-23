@@ -13,6 +13,8 @@ export default function Home() {
 	const [error, setError] = useState<PayloadError | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 
+	const [claims, setClaims] = useState<string[]>([]);
+
 	useEffect(()=>{
 		(async ()=>{
 			if (members.length > 1) {
@@ -33,13 +35,21 @@ export default function Home() {
 
 			setLoading(false);
 		})()
-	},[loading, members, error]);
+	},[loading, members, error, claims]);
 
 
 	const reload= () => {
 		setError(null);
 		setLoading(true)
 		if (members?.length >= 1) setMembers(()=>[])
+	}
+
+	const updateClaims = (id: string)=>{
+		setClaims((p)=>{
+			if (p.includes(id)) return p.filter(e=>e !== id)
+
+			return [...p, id]
+		})
 	}
 
 
@@ -57,7 +67,7 @@ export default function Home() {
 			message='No members registered yet!'
 			ctaText='Load again'
 			reload={reload}
-		/> : <MemberCard members={members}/>;
+		/> : <MemberCard members={members} selections={claims} onSelect={updateClaims}/>;
 		
 	return (
 		<main className={styles.main}>

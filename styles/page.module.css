@@ -185,6 +185,22 @@
 }
 
 
+/* Selections styles*/
+.selectable {
+	transition: box-shadow 200ms;
+	cursor: pointer;
+}
+
+.selectable:not(.selected):hover {
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 60px -12px inset,rgba(155, 223, 172, 0.25) 0px 18px 36px -18px inset;
+
+}
+.selected {
+	/* background-color: red !important; */
+	box-shadow: rgba(81, 226, 117, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+
 @keyframes shine-loading-image {
 	0% {
 		background-position: -32px;
