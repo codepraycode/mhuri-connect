@@ -1,16 +1,16 @@
+import { Payload, PayloadError } from '@utils/types'
 import { NextResponse } from 'next/server'
 
-type Payload = null | object | string;
 
 export interface RequestResponse {
     status: number,
     statusText: string,
     data?: Payload,
-    error?: Payload,
+    error?: PayloadError,
 }
 
 
-export const ReqResponse = (data: Payload = {}, error: Payload = null, status:number = 200, statusText:string = "Ok"): NextResponse => {
+export const ReqResponse = (data: Payload = {}, error: PayloadError = null, status:number = 200, statusText:string = "Ok"): NextResponse => {
 
     const resData: RequestResponse = {
         status,

@@ -5,6 +5,11 @@ import {ReqResponse} from '../responses';
 import { Types } from 'mongoose';
 import { ClaimsSubmit, LoadUser, User } from '@helpers/server';
 
+// Incase of server error,
+//      it most likely has to do with user's network
+let code: string = "Network error";
+let message: string = "Please check your connections!"
+
 
 export const GET = async() => {
 
@@ -12,9 +17,9 @@ export const GET = async() => {
     try {
         await connectToDb();
     } catch(err) {
-        const message = "Storage error";
+        // const message = "Storage error";
         console.log("MOGODB ERROR:> could not connect to DB", err);
-        return ReqResponse(null, { message }, 500, message)
+        return ReqResponse(null, { message, code}, 500, message)
     }
 
     let members = null; // expected to become an array.
@@ -24,8 +29,9 @@ export const GET = async() => {
         //  along side their connections.
         members = await Member.find({});
     } catch(err) {
-        const message = "Could not load members";
-        return ReqResponse(null, { message }, 500, message)
+        // const message = "Could not load members";
+        console.log("Error:>", err);
+        return ReqResponse(null, { message, code }, 500, message)
     }
 
     // Return all the members
@@ -42,9 +48,8 @@ export const POST = async(req: NextRequest) => {
     try {
         await connectToDb();
     } catch(err) {
-        const message = "Storage error";
         console.log("MOGODB ERROR:> could not connect to DB", err);
-        return ReqResponse(null, { message }, 500, message)
+        return ReqResponse(null, { message, code }, 500, message)
     }
 
     // Load user
@@ -53,13 +58,14 @@ export const POST = async(req: NextRequest) => {
     try {
         user = await LoadUser(id);
     } catch(err) {
-        const message = "Could not load member";
-        return ReqResponse(null, { message }, 500, message)
+        console.log("Error:>", err);
+        return ReqResponse(null, { message, code }, 500, message)
     }
     
     if (!user) {
-        const message = "Member not found"
-        return ReqResponse(null, { message }, 400, message)
+        code = "Unknown user"
+        message = "Authentication is required for identification"
+        return ReqResponse(null, { message, code}, 403, message)
     }
 
     // Check if the user's id is not included in the claims, remove if there

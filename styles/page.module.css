@@ -145,6 +145,46 @@
 	/* background-color: red; */
 }
 
+
+/* ===============  */
+/*  EMPTY SCREEN STYLE */
+/* ===============  */
+
+.error {
+  /* background-color: red; */
+  /* width: 100%; */
+  /* justify-self:center; */
+  display: block;
+  margin-inline: auto;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.error div:first-child {
+	max-width: 100%;
+	width: 180px;
+	aspect-ratio: 1;
+
+	margin-inline: auto;
+	margin-bottom: 2rem;
+
+	border-radius: 50%;
+
+	background: rgba(var(--card-border-rgb), 30%);
+	padding: 1.4rem;
+	overflow: hidden;
+
+	box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.error p {
+	margin-top: 1rem;
+}
+.error p span {
+	cursor: pointer;
+}
+
+
 @keyframes shine-loading-image {
 	0% {
 		background-position: -32px;
