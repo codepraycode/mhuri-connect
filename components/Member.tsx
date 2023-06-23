@@ -35,7 +35,7 @@ const MemberCard = ({members}: MemberCardProps) => {
                                 <span className={styles.lt}>{member.firstname} {member.lastname}</span>
                                 <span className={styles.pt}>@{member.username}</span>
                                 <span className={styles.pt}>
-                                    XXX • 200 level
+                                    {member.department || "AAA"} • {member.level || "AAA"} level
                                 </span>
                             </div>
                         </div>

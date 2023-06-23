@@ -70,6 +70,12 @@ const MemberSchema = new Schema({
     dateOfBirth: {
         type: Schema.Types.Date,
     },
+    level: {
+        type: Schema.Types.Number,
+    },
+    department: {
+        type: Schema.Types.String,
+    },
     isAdmin: {
         type: Schema.Types.Boolean,
         default: false,
