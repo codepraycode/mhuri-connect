@@ -1,6 +1,10 @@
+'use client';
+
 import React from 'react'
 import styles from '@styles/page.module.css';
-import Image from 'next/image'
+import Image from 'next/image';
+import { useRouter } from 'next/navigation'
+ 
 
 interface ErrorProps {
     title?: string, 
@@ -47,6 +51,44 @@ export const NetworkError = ({title="Network Error!", icon="/network-error.svg",
             message={message}
             ctaText={ctaText}
             reload={reload}
+        />
+    )
+}
+
+export const ServerError = ({reload}:{reload: ()=>void}) => {
+
+    const title = "Error 500!"
+    const icon="/server-error.svg"
+    const message="Oops! something not good just happened, but don't worry, we're working on it. "
+    const ctaText="Reload"
+
+    return (
+        <PassiveError
+            title={title}
+            icon={icon}
+            message={message}
+            ctaText={ctaText}
+            reload={reload}
+        />
+    )
+}
+
+export const PageNotFound = () => {
+
+    const router = useRouter();
+
+    const title = "404 - Page not found!"
+    const icon="/404.svg"
+    const message="It appears the page you seek does not exist or is removed."
+    const ctaText="Go back"
+
+    return (
+        <PassiveError
+            title={title}
+            icon={icon}
+            message={message}
+            ctaText={ctaText}
+            reload={()=>router.back()}
         />
     )
 }
