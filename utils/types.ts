@@ -1,4 +1,5 @@
 import { IMember } from '@models/member';
+import { Types } from 'mongoose';
 
 export type Payload = null | object | string;
 export type PayloadError = null | {
@@ -6,14 +7,15 @@ export type PayloadError = null | {
     code: string
 }
 
+export type ObjectString = Types.ObjectId;
 
 // Components
 
 export interface MemberCardProps {
     members: readonly IMember[],
     isAdmin?: boolean,
-    selections: string[],
-    onSelect:(id:string)=>void
+    selections: ObjectString[],
+    onSelect:(id:ObjectString)=>void
 }
 
 export interface LoaderProps {

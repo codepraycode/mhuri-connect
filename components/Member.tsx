@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '@styles/page.module.css';
 import Image from 'next/image'
 import { GridDisplay } from './DisplayWrappers';
-import { MemberCardProps } from '@utils/types';
+import { MemberCardProps, ObjectString } from '@utils/types';
 
 
 
@@ -14,9 +14,9 @@ const MemberCard = ({members, isAdmin, selections, onSelect}: MemberCardProps) =
                 members.map((member) => {
                     return (
                         <div
-                            className={`${styles.cardd} ${styles.selectable} ${selections.includes((member._id as string)) ? styles.selected: ''}`}
+                            className={`${styles.cardd} ${styles.selectable} ${selections.includes((member._id as unknown as ObjectString)) ? styles.selected: ''}`}
                             key={member._id}
-                            onClick={()=>onSelect((member._id as string))}
+                            onClick={()=>onSelect((member._id as unknown as ObjectString))}
                         >
                             <div>
                                 <Image
