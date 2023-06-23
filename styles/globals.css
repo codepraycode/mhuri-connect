@@ -104,6 +104,26 @@ a {
   width: 100%;
   height: auto;
 }
+
+
+hr {
+  display: block;
+  margin-block: .4rem;
+  /* height: .2rem; */
+  border-width: .01rem;
+  border-radius: .2rem;
+  border-color: rgba(var(--card-border-rgb), 30%);
+}
+
+
+/* Utilities */
+
+.my-3 {
+  margin-block: .7rem;
+}
+.mt-3 {
+  margin-top: .5rem;
+}
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
