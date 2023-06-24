@@ -7,12 +7,15 @@ import { LoadingMembers } from '@components/Loaders';
 import { NetworkError, PassiveError } from '@components/errors';
 import { PayloadError } from '@utils/types';
 import { useUser } from '@hooks';
+import Modal from '@components/Modal';
 
 export default function Home() {
 
 	const [members, setMembers] = useState<IMember[]>([]);
 	const [error, setError] = useState<PayloadError | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
+
+	const [showModal, setShowModal] = useState(false);
 	
 
 	const {updateClaims, ...user} = useUser();
@@ -75,30 +78,33 @@ export default function Home() {
 			/>;
 		
 	return (
-		<main className={styles.main}>
-			<div className={styles.description}>
-				<h1>
-					Oila connect |&nbsp;
-					<a href="/" className={styles.nav}>
-						About
-					</a>
-				</h1>
+		<>
+			<Modal open={showModal} close={()=>setShowModal(false)}/>
+			<main className={styles.main}>
+				<div className={styles.description}>
+					<h1>
+						Oila connect |&nbsp;
+						<a href="/" className={styles.nav}>
+							About
+						</a>
+					</h1>
 
-				<div>
-					<span className={styles.credit}>
-						By{' '}
-						<h4>codepraycode</h4>
-					</span>
+					<div>
+						<span className={styles.credit}>
+							By{' '}
+							<h4>codepraycode</h4>
+						</span>
+					</div>
 				</div>
-			</div>
 
-			<>
-				{
-					// members ? <MemberCard members={members}/> : <LoadingMembers/>
-					// <MemberCard members={[]}/>
-					template
-				}
-			</>
-		</main>
+				<>
+					{
+						// members ? <MemberCard members={members}/> : <LoadingMembers/>
+						// <MemberCard members={[]}/>
+						template
+					}
+				</>
+			</main>
+		</>
 	)
 }
