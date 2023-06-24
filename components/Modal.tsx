@@ -15,6 +15,16 @@ const Modal = ({open:Opened,}: {open:boolean, close: ()=>void}) =>{
             if (open) {
                 try{
                     modal?.showModal();
+                    modal?.addEventListener('click', function(e) {
+                        const r = modal.getBoundingClientRect();
+
+                        if (
+                            !(e.clientX > r.left &&
+                            e.clientX < r.right &&
+                            e.clientY > r.top &&
+                            e.clientY < r.bottom)
+                        ) modal.close()
+                    })
                 } catch(err){}
             }else {
                 modal?.close();

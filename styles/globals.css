@@ -277,7 +277,7 @@ dialog #closeBtn {
 
 dialog::backdrop {
   background-color: rgba(90, 87, 87, 0.432);
-  /* transition: backgroundColor 0.6s ease-out; */
+  backdrop-filter: blur(3px);
 }
 
 
