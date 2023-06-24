@@ -1,12 +1,11 @@
 // Modal component
 'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { ModalProps } from "@utils/types";
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
-const Modal = ({open:Opened,}: {open:boolean, close: ()=>void}) =>{
-
-    const [open, setOpen] = useState(false);
+const Modal = ({open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
     
     useEffect(()=>{
         (()=>{
@@ -16,6 +15,8 @@ const Modal = ({open:Opened,}: {open:boolean, close: ()=>void}) =>{
                 try{
                     modal?.showModal();
                     modal?.addEventListener('click', function(e) {
+                        if (!disableCloseOnBackgroundClick) return;
+
                         const r = modal.getBoundingClientRect();
 
                         if (
@@ -32,17 +33,21 @@ const Modal = ({open:Opened,}: {open:boolean, close: ()=>void}) =>{
         })()
     }, [open])
 
-    useEffect(()=>{
-        (()=>setTimeout(()=>setOpen(true), 2000))()
-    },[])
-
     return (
         <>
             {
                 createPortal(
                     <dialog>
                         <h2>App Modal</h2>
-                        <span id="closeBtn" onClick={()=>setOpen(false)}></span>
+                        {
+                            userCanClose && (
+
+                                <span
+                                    id="closeBtn"
+                                    onClick={()=>onClose()}
+                                ></span>
+                            )
+                        }
                     </dialog>,
                     document.body,
                 )

@@ -15,7 +15,7 @@ export default function Home() {
 	const [error, setError] = useState<PayloadError | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const [showModal, setShowModal] = useState(false);
+	const [authenticate, setAuthenticate] = useState(false);
 	
 
 	const {updateClaims, ...user} = useUser();
@@ -24,6 +24,11 @@ export default function Home() {
 
 	useEffect(()=>{
 		(async ()=>{
+
+			if (!user?._id) {
+				return;
+			}
+
 			if (members.length > 1) {
 				// console.log("False load")
 				return
@@ -50,6 +55,15 @@ export default function Home() {
 		})()
 	},[loading, members, error, claims]);
 
+
+	useEffect(()=>{
+		(()=>{
+			if (!user?._id) {
+				setAuthenticate(true);
+				return
+			}
+		})()
+	}, [user])
 
 	const reload= () => {
 		setError(null);
@@ -79,7 +93,8 @@ export default function Home() {
 		
 	return (
 		<>
-			<Modal open={showModal} close={()=>setShowModal(false)}/>
+			<Modal open={authenticate} onClose={()=>setAuthenticate(false)}/>
+
 			<main className={styles.main}>
 				<div className={styles.description}>
 					<h1>

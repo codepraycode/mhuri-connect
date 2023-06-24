@@ -8,20 +8,12 @@ import { useState } from "react";
 export const userHook = () => {
     const _id: ObjectString = ("6491a4420929f39bccea8100" as unknown as ObjectString);
     
-	const updateTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
-
     const [user, setUser] = useState<IMember | null>(null);
-    
     const [claims, setClaims] = useState(()=>user && user.claims || []);
 
-    // useEffect(()=> {
-    //     // Load Users
-    //     (()=>{
-    //         setUser(()=>({
-    //             _id
-    //         }))
-    //     })()
-    // }, []);
+	const updateTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+
+    
 
     const updateClaims = (id: ObjectString)=>{
 		// Using debounce method
@@ -62,5 +54,5 @@ export const userHook = () => {
 	}
 
 
-    return {...user, _id, claims, updateClaims};
+    return {...user, claims, updateClaims};
 }

@@ -21,3 +21,10 @@ export interface MemberCardProps {
 export interface LoaderProps {
     isAdmin?: boolean
 }
+
+export interface ModalProps {
+    open: boolean,
+    userCanClose?: boolean,
+    disableCloseOnBackgroundClick?: boolean,
+    onClose: ()=>void,
+}
