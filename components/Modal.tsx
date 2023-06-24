@@ -4,6 +4,8 @@
 import { ModalProps } from "@utils/types";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import styles from '@styles/page.module.css';
+import Form, { EmailInput, PasswordInput } from "./Form";
 
 const Modal = ({open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
     
@@ -38,16 +40,45 @@ const Modal = ({open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{
             {
                 createPortal(
                     <dialog>
-                        <h2>App Modal</h2>
-                        {
-                            userCanClose && (
 
-                                <span
-                                    id="closeBtn"
-                                    onClick={()=>onClose()}
-                                ></span>
-                            )
-                        }
+                        <div className="header">
+                            <h3>
+                                Oila connect |&nbsp;
+                                <span>
+                                    Sign In
+                                </span>
+                            </h3>
+                            {
+                                userCanClose && (
+
+                                    <span
+                                        id="closeBtn"
+                                        onClick={()=>onClose()}
+                                    ></span>
+                                )
+                            }
+
+                        </div>
+
+
+                        <div className="content">
+                            <Form error="A sample error">
+
+                                <EmailInput
+                                    name="email"
+                                    label="Enter your email"
+                                />
+
+                                <PasswordInput
+                                    name="password"
+                                    label="Enter your password"
+                                />
+
+                                <button type="submit">
+                                    Sign In
+                                </button>
+                            </Form>
+                        </div>
                     </dialog>,
                     document.body,
                 )

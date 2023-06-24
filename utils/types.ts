@@ -28,3 +28,18 @@ export interface ModalProps {
     disableCloseOnBackgroundClick?: boolean,
     onClose: ()=>void,
 }
+
+
+export interface InputProps {
+    type?: string,
+    name: string,
+    autoComplete?: boolean,
+    placeholder?: string,
+    label: string,
+    error?: string | null
+}
+
+export interface FormProps {
+    children: React.ReactNode,
+    error: string | null,
+}
