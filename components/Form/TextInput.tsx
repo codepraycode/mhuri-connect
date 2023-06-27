@@ -9,6 +9,8 @@ export const TextInput = (props: InputProps) =>{
                 name={props.name}
                 autoComplete={props.autoComplete ? "on" : "off"}
                 placeholder={props.placeholder || " "}
+                value={props.value || ''}
+                onChange={(e)=>props.handleChange(e.target.value as string)}
             />
 
             <label

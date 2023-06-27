@@ -1,13 +1,19 @@
 // Modal component
 'use client';
 
-import { ModalProps } from "@utils/types";
-import { useEffect } from "react";
+import { ModalProps, PayloadError } from "@utils/types";
+import { FormEventHandler, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from '@styles/page.module.css';
 import Form, { EmailInput, PasswordInput } from "./Form";
+import { signIn } from 'next-auth/react';
+
+
 
 const Modal = ({open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
+
+    const [authEmail, setAuthEmail] = useState<string>('')
+    const [authError, setAuthError] = useState<PayloadError>(null)
     
     useEffect(()=>{
         (()=>{
@@ -34,6 +40,16 @@ const Modal = ({open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{
             }
         })()
     }, [open])
+
+
+    const handleAuth:FormEventHandler = (e)=>{
+        if (e) e.preventDefault();
+
+        // console.log("Email:", authEmail)
+        signIn();
+    }
+    
+    const handleChange = (val: string | number)=> setAuthEmail(()=>(val as string))
 
     return (
         <>
@@ -62,16 +78,15 @@ const Modal = ({open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{
 
 
                         <div className="content">
-                            <Form error="A sample error">
-
+                            <Form
+                                error={authError?.message}
+                                // handleSubmit={handleAuth}
+                            >
                                 <EmailInput
                                     name="email"
                                     label="Enter your email"
-                                />
-
-                                <PasswordInput
-                                    name="password"
-                                    label="Enter your password"
+                                    value={authEmail}
+                                    handleChange={handleChange}
                                 />
 
                                 <button type="submit">

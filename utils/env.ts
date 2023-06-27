@@ -7,7 +7,26 @@ const isProduction: boolean = env.NODE_ENV === 'production';
 const MONGODB_URI = env.MONGODB_URI || "";
 const DB_NAME = isProduction ? "oila_db" : "oila_test_db";
 
+// NEXT Env
+const NEXTAUTH_URL = env.NEXTAUTH_URL;
+const NEXTAUTH_SECRET = env.NEXTAUTH_SECRET
+
+// Email Env
+const EMAIL_SERVER_USER= env.EMAIL_SERVER_USER
+const EMAIL_SERVER_PASSWORD= env.EMAIL_SERVER_PASSWORD
+const EMAIL_SERVER_HOST= env.EMAIL_SERVER_HOST
+const EMAIL_SERVER_PORT= env.EMAIL_SERVER_PORT
+const EMAIL_FROM= env.EMAIL_FROM
 
 export {
-    MONGODB_URI, DB_NAME
+    isProduction,
+
+    
+    MONGODB_URI, DB_NAME,
+
+    NEXTAUTH_URL, NEXTAUTH_SECRET,
+
+    EMAIL_SERVER_USER, EMAIL_SERVER_PASSWORD,
+    EMAIL_SERVER_HOST, EMAIL_SERVER_PORT,
+    EMAIL_FROM,
 }

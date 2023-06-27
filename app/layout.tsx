@@ -1,3 +1,4 @@
+import Provider from '@components/AuthProvider'
 import '@styles/globals.css'
 import { Inter } from 'next/font/google'
 
@@ -16,28 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <!-- A modal dialog containing a form --> */}
-        {/* <dialog open id="favDialog">
-          <form>
-            <p>
-              <label>
-                Favorite animal:
-                <select>
-                  <option value="default">Choose…</option>
-                  <option>Brine shrimp</option>
-                  <option>Red panda</option>
-                  <option>Spider monkey</option>
-                </select>
-              </label>
-            </p>
-            <div>
-              <button value="cancel" formMethod="dialog">Cancel</button>
-              <button id="confirmBtn" value="default">Confirm</button>
-            </div>
-          </form>
-        </dialog> */}
-
-        {children}
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   )

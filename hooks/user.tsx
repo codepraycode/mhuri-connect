@@ -1,12 +1,18 @@
 'use client';
+import { useState, useRef } from "react";
+import { useSession } from 'next-auth/react';
 import { IMember } from "@models/member";
 import { ObjectString } from "@utils/types";
-import { useEffect, useRef } from "react";
-import { useState } from "react";
 
 
 export const userHook = () => {
     const _id: ObjectString = ("6491a4420929f39bccea8100" as unknown as ObjectString);
+
+	const {data: session, status} = useSession();
+
+	// Status includes: loading, unauthenticated, authenticated.
+
+	console.log("Session", session, status);
     
     const [user, setUser] = useState<IMember | null>(null);
     const [claims, setClaims] = useState(()=>user && user.claims || []);
