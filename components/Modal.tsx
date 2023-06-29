@@ -2,19 +2,19 @@
 'use client';
 
 import { ModalProps } from "@utils/types";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 
 
 const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
 
-    
+    const modal = useRef(null)
     useEffect(()=>{
         (()=>{
             // console.log(modal);
             if (!document) return;
-            const modal = document.querySelector('dialog');
+            // const modal = document.querySelector('dialog');
             if (isOpen) {
                 try{
                     modal?.showModal();
@@ -41,7 +41,7 @@ const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundCli
 
 
     const closeModal = () =>{
-        const modal = document.querySelector('dialog');
+        //const modal = document.querySelector('dialog');
         modal?.close();
     }
 
@@ -50,7 +50,7 @@ const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundCli
         <>
             {
                 createPortal(
-                    <dialog>
+                    <dialog ref={modalRef}>
                         {
                             userCanClose && (
 
