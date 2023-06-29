@@ -5,7 +5,7 @@ import styles from '@styles/page.module.css';
 import { IMember } from '@models/member';
 import { LoadingMembers } from '@components/Loaders';
 import { NetworkError, PassiveError } from '@components/errors';
-import { PayloadError } from '@utils/types';
+import { ObjectString, PayloadError } from '@utils/types';
 import { useUser } from '@hooks';
 import { LoginModal } from '@components/auth/login';
 
@@ -13,19 +13,25 @@ export default function Home() {
 
 	const [members, setMembers] = useState<IMember[]>([]);
 	const [error, setError] = useState<PayloadError | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);	
+	const [loadingMembers, setLoadingMembers] = useState<boolean>(true);
 	
 
-	const {updateClaims, ...user} = useUser();
+	const {updateClaims, user, status} = useUser();
 
-	const claims = user.claims;
+	const isLoading = status === 'loading';
+	const isAuthenticated = status === 'authenticated';
+	const isNotAuthenticated = status === 'unauthenticated';
+
+	const claims:ObjectString[] = []; //user.claims;
 
 	useEffect(()=>{
 		(async ()=>{
 
-			if (!user?._id) {
-				return;
-			}
+			if (isLoading || !isAuthenticated) return;
+
+			// if (!user?._id) {
+			// 	return;
+			// }
 
 			if (members.length > 1) {
 				// console.log("False load")
@@ -48,24 +54,15 @@ export default function Home() {
 			} catch(err) {
 				setError(()=>({code: "Network Error!", message:"Could not load members!"}))
 			}finally {
-				setLoading(false);
+				setLoadingMembers(false);
 			}
 		})()
-	},[loading, members, error, claims]);
+	},[status, loadingMembers, members, error]);
 
-
-	// useEffect(()=>{
-	// 	(()=>{
-	// 		if (!user?._id) {
-	// 			setAuthenticate(true);
-	// 			return
-	// 		}
-	// 	})()
-	// }, [user])
 
 	const reload= () => {
 		setError(null);
-		setLoading(true)
+		setLoadingMembers(true)
 		if (members?.length >= 1) setMembers(()=>[])
 	}
 
@@ -76,7 +73,7 @@ export default function Home() {
 			title={error.code}
 			reload={reload}
 		/>
-    else if (!loading) template = members.length < 1 ? 
+    else if (!isLoading && !loadingMembers) template = members.length < 1 ? 
 		<PassiveError 
 			title='No Members!'
 			icon="/users.svg"
@@ -88,22 +85,22 @@ export default function Home() {
 				selections={claims}
 				onSelect={updateClaims}
 			/>;
-		
+	
 	return (
 		<>
-			<LoginModal/>
+			<LoginModal show={isNotAuthenticated} close={()=>{}}/>
 
 			<main className={styles.main}>
 				<div className={styles.description}>
 					<h1>
 						Oila connect |&nbsp;
 						<a href="/" className={styles.nav}>
-							About
+							{isLoading ? "Loading..." : "Sign In"}
 						</a>
 					</h1>
 
 					<div>
-						<span className={styles.credit}>
+						<span className={"credit"}>
 							By{' '}
 							<h4>codepraycode</h4>
 						</span>

@@ -7,6 +7,7 @@ export type PayloadError = null | {
     message: string,
     code: string
 }
+export type authStatus = 'loading' | 'unauthenticated' | 'authenticated';
 
 export type ObjectString = Types.ObjectId;
 
@@ -59,4 +60,13 @@ export interface FormProps {
 export interface ProviderProps {
     children: React.ReactNode,
     session?: any
+}
+
+
+
+// Hooks
+export interface IUserHook {
+    user: IMember | null,
+    updateClaims: (id: ObjectString) =>void,
+    status: authStatus
 }

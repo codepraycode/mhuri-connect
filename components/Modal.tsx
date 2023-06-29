@@ -7,15 +7,14 @@ import { createPortal } from "react-dom";
 
 
 
-const Modal = ({children, open, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
+const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
 
-    
     
     useEffect(()=>{
         (()=>{
             // console.log(modal);
             const modal = document.querySelector('dialog');
-            if (open) {
+            if (isOpen) {
                 try{
                     modal?.showModal();
                     modal?.addEventListener('click', function(e) {
@@ -28,14 +27,22 @@ const Modal = ({children, open, userCanClose, disableCloseOnBackgroundClick, onC
                             e.clientX < r.right &&
                             e.clientY > r.top &&
                             e.clientY < r.bottom)
-                        ) modal.close()
+                        ) closeModal()
                     })
-                } catch(err){}
+                } catch(err){
+                    console.log("Modal already opened")
+                }
             }else {
-                modal?.close();
+                closeModal()
             }
         })()
-    }, [open])
+    }, [isOpen])
+
+
+    const closeModal = () =>{
+        const modal = document.querySelector('dialog');
+        modal?.close();
+    }
 
 
     return (
@@ -48,7 +55,11 @@ const Modal = ({children, open, userCanClose, disableCloseOnBackgroundClick, onC
 
                                 <span
                                     id="closeBtn"
-                                    onClick={()=>onClose()}
+                                    onClick={()=>{
+                                        if (onClose) onClose();
+
+                                        closeModal()
+                                    }}
                                 ></span>
                             )
                         }

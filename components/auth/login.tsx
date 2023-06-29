@@ -57,13 +57,12 @@ const LoginTemplate = () => {
     )
 }
 
-const LoginModal = () =>{
-    const [open, setOpen] = useState(true);
+const LoginModal = ({show, close}: {show: boolean, close: ()=>void}) =>{
 
     return (
         <Modal
-            open={open}
-            onClose={()=>setOpen(false)}
+            open={show}
+            onClose={()=>close()}
         >
             <LoginTemplate/>
         </Modal>
