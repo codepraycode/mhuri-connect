@@ -28,6 +28,14 @@ export interface ModalProps {
     userCanClose?: boolean,
     disableCloseOnBackgroundClick?: boolean,
     onClose: ()=>void,
+    children: React.ReactNode
+}
+
+export interface AuthTemplateProps<T = string|number> {
+    authError: PayloadError | null,
+    authEmail: string,
+    handleChange: (val: T)=>void
+    handleAuth: FormEventHandler
 }
 
 export interface InputProps<T = string|number> {

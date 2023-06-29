@@ -7,15 +7,13 @@ import { LoadingMembers } from '@components/Loaders';
 import { NetworkError, PassiveError } from '@components/errors';
 import { PayloadError } from '@utils/types';
 import { useUser } from '@hooks';
-import Modal from '@components/Modal';
+// import Modal from '@components/Modal';
 
 export default function Home() {
 
 	const [members, setMembers] = useState<IMember[]>([]);
 	const [error, setError] = useState<PayloadError | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
-
-	const [authenticate, setAuthenticate] = useState(false);
 	
 
 	const {updateClaims, ...user} = useUser();
@@ -56,14 +54,14 @@ export default function Home() {
 	},[loading, members, error, claims]);
 
 
-	useEffect(()=>{
-		(()=>{
-			if (!user?._id) {
-				setAuthenticate(true);
-				return
-			}
-		})()
-	}, [user])
+	// useEffect(()=>{
+	// 	(()=>{
+	// 		if (!user?._id) {
+	// 			setAuthenticate(true);
+	// 			return
+	// 		}
+	// 	})()
+	// }, [user])
 
 	const reload= () => {
 		setError(null);
@@ -93,7 +91,7 @@ export default function Home() {
 		
 	return (
 		<>
-			<Modal open={authenticate} onClose={()=>setAuthenticate(false)}/>
+			{/* <Modal open={authenticate} onClose={()=>setAuthenticate(false)}/> */}
 
 			<main className={styles.main}>
 				<div className={styles.description}>
