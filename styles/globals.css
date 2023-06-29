@@ -128,8 +128,12 @@ hr {
   font-size: .7rem;
 }
 
-/* Utilities */
 
+
+/* Utilities */
+.text-center {
+  text-align: center;
+}
 .my-3 {
   margin-block: .7rem;
 }

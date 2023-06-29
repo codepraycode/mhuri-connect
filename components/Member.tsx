@@ -6,12 +6,14 @@ import { MemberCardProps, ObjectString } from '@utils/types';
 
 
 
-const MemberCard = ({members, isAdmin, selections, onSelect}: MemberCardProps) => {
+const MemberCard = ({members, isAdmin, selections, user, onSelect}: MemberCardProps) => {
 
     return (
         <GridDisplay>
             {
                 members.map((member) => {
+                    if (member._id === user?._id) return null;
+
                     return (
                         <div
                             className={`${styles.cardd} ${styles.selectable} ${selections.includes((member._id as unknown as ObjectString)) ? styles.selected: ''}`}

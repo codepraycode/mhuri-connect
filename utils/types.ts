@@ -18,7 +18,8 @@ export interface MemberCardProps {
     members: readonly IMember[],
     isAdmin?: boolean,
     selections: ObjectString[],
-    onSelect:(id:ObjectString)=>void
+    onSelect:(id:ObjectString)=>void,
+    user?: User
 }
 
 export interface LoaderProps {

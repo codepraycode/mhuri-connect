@@ -87,6 +87,7 @@ export default function Home() {
 				members={members}
 				selections={claims}
 				onSelect={updateClaims}
+				user={user}
 			/>;
 
 	return (

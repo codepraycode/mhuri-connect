@@ -35,7 +35,7 @@ const authHandler = NextAuth({
         signIn: "/",
         signOut: "/",
         error: "/", // Error code passed in query string as ?error=
-        verifyRequest: "/", // (used for check email message)
+        verifyRequest: "/sent", // (used for check email message)
     // If set, new users will be directed here on first sign in
         newUser: '/',
     },
