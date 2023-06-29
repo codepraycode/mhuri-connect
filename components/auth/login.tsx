@@ -1,9 +1,24 @@
+'use client';
+
 import Form, { EmailInput } from '@components/Form';
-import { AuthTemplateProps } from '@utils/types';
-import React from 'react';
+import Modal from '@components/Modal';
+import { PayloadError } from '@utils/types';
+import React, { FormEventHandler, useState } from 'react';
 
 
-const LoginTemplate = ({authError, authEmail, handleChange, handleAuth}:AuthTemplateProps) => {
+const LoginTemplate = () => {
+
+    const [authEmail, setAuthEmail] = useState<string>('')
+    const [authError, setAuthError] = useState<PayloadError>(null);
+
+    const handleAuth:FormEventHandler = (e)=>{
+        if (e) e.preventDefault();
+
+        console.log("Email:", authEmail)
+        // signIn();
+    }
+    
+    const handleChange = (val: string | number)=> setAuthEmail(()=>(val as string))
     
     return (
         <>
@@ -42,5 +57,17 @@ const LoginTemplate = ({authError, authEmail, handleChange, handleAuth}:AuthTemp
     )
 }
 
+const LoginModal = () =>{
+    const [open, setOpen] = useState(true);
 
-export {LoginTemplate}
+    return (
+        <Modal
+            open={open}
+            onClose={()=>setOpen(false)}
+        >
+            <LoginTemplate/>
+        </Modal>
+    )
+}
+
+export {LoginTemplate, LoginModal}

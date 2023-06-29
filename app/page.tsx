@@ -7,13 +7,13 @@ import { LoadingMembers } from '@components/Loaders';
 import { NetworkError, PassiveError } from '@components/errors';
 import { PayloadError } from '@utils/types';
 import { useUser } from '@hooks';
-// import Modal from '@components/Modal';
+import { LoginModal } from '@components/auth/login';
 
 export default function Home() {
 
 	const [members, setMembers] = useState<IMember[]>([]);
 	const [error, setError] = useState<PayloadError | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(true);	
 	
 
 	const {updateClaims, ...user} = useUser();
@@ -91,7 +91,7 @@ export default function Home() {
 		
 	return (
 		<>
-			{/* <Modal open={authenticate} onClose={()=>setAuthenticate(false)}/> */}
+			<LoginModal/>
 
 			<main className={styles.main}>
 				<div className={styles.description}>
