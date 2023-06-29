@@ -9,7 +9,7 @@ import { createPortal } from "react-dom";
 
 const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundClick, onClose=()=>{}, }: ModalProps) =>{
 
-    const modal = useRef<HTMLDialogElement>(null)
+    const modalRef = useRef<HTMLDialogElement>(null)
     useEffect(()=>{
         (()=>{
             // console.log(modal);
