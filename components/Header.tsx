@@ -2,19 +2,41 @@ import { UserStatusProps } from '@utils/types';
 import React from 'react';
 import styles from '@styles/page.module.css';
 import { signOut } from 'next-auth/react';
-
+import { usePathname } from 'next/navigation';
 
 const Header = (props:UserStatusProps) =>{
     let state = 'Not signed in';
 
+    const nav = usePathname();
+
+    // console.log(nav)
+
+    const navIsStats = nav ==='/stats';
+
     if (props.isAuthenticated) state = "Log out";
     if (props.isLoading) state = "Loading...";
+
+    // console.log(props.user)
 
     return (
         <div className={styles.description}>
             <h1>
-                Oila connect <span className={styles.dsp}>&nbsp;| </span>
-
+                Oila connect
+                
+                    { props.user?.isAdmin && (
+                        <>
+                            {" "}|&nbsp;
+                            <a
+                                href={navIsStats ? '/': '/stats'}
+                                className={styles.nav}
+                                title={'Click to see stats'}
+                            >
+                                {navIsStats ? "Home" : "stats"}
+                            </a>
+                        </>
+                        )
+                    }
+                <span className={styles.dsp}>&nbsp;| </span>
                 <a
                     href="/"
                     className={styles.nav} 

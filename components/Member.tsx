@@ -7,18 +7,22 @@ import { MemberCardProps, ObjectString } from '@utils/types';
 
 
 const MemberCard = ({members, isAdmin, selections, user, onSelect}: MemberCardProps) => {
-
     return (
         <GridDisplay>
             {
                 members.map((member) => {
                     if (member._id === user?._id) return null;
+                    const id = (member._id as unknown as ObjectString);
+
+                    const isSelected = isAdmin  || selections.includes(id);
 
                     return (
                         <div
-                            className={`${styles.cardd} ${styles.selectable} ${selections.includes((member._id as unknown as ObjectString)) ? styles.selected: ''}`}
+                            className={`${styles.cardd} ${styles.selectable} ${isSelected ? styles.selected: ''}`}
                             key={member._id}
-                            onClick={()=>onSelect((member._id as unknown as ObjectString))}
+                            onClick={()=>{
+                                if(!isAdmin) onSelect(id);
+                            }}
                         >
                             <div>
                                 <Image
@@ -47,10 +51,10 @@ const MemberCard = ({members, isAdmin, selections, user, onSelect}: MemberCardPr
                                             <hr/>
                                             <div>
                                                 <span className={styles.pt}>
-                                                    Know: xxx | known by: xxx
+                                                    Know: {member.stats?.knows || 0} | known by: {member.stats?.known || 0}
                                                 </span>
                                                 <span className={styles.pt}>
-                                                    connections: xx%
+                                                    connections: {member.stats?.connections || 0}%
                                                 </span>
                                             </div>
 

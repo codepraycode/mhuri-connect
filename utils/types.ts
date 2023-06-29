@@ -67,7 +67,8 @@ export interface ProviderProps {
 export interface UserStatusProps {
     user: null | IMember,
     isLoading: boolean,
-    isAuthenticated: boolean
+    isAuthenticated: boolean,
+    // showStats?: boolean
 }
 
 // Hooks
