@@ -3,6 +3,7 @@
 import Form, { EmailInput } from '@components/Form';
 import Modal from '@components/Modal';
 import { PayloadError } from '@utils/types';
+import { signIn } from 'next-auth/react';
 import React, { FormEventHandler, useState } from 'react';
 
 
@@ -10,12 +11,20 @@ const LoginTemplate = () => {
 
     const [authEmail, setAuthEmail] = useState<string>('')
     const [authError, setAuthError] = useState<PayloadError>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleAuth:FormEventHandler = (e)=>{
         if (e) e.preventDefault();
 
-        console.log("Email:", authEmail)
-        // signIn();
+        // console.log("Email:", authEmail)
+        setLoading(true);
+        signIn("email", {
+            email: authEmail
+        })
+        .then((res)=>{
+            console.log("response:", res);
+        }).catch((err)=>console.log("Error:", err))
+        .finally(()=>setLoading(false));
     }
     
     const handleChange = (val: string | number)=> setAuthEmail(()=>(val as string))
@@ -26,7 +35,7 @@ const LoginTemplate = () => {
                     <h3>
                         Oila connect |&nbsp;
                         <span>
-                            Sign In
+                            {loading ? 'Signing in...' : 'Sign In'}
                         </span>
                     </h3>
             </div>
@@ -44,8 +53,8 @@ const LoginTemplate = () => {
                         handleChange={handleChange}
                     />
 
-                    <button type="submit">
-                        Sign In
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Signing in...' : 'Sign In'}
                     </button>
                 </Form>
 

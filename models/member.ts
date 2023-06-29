@@ -90,7 +90,7 @@ type IMemberSchema = InferSchemaType<typeof MemberSchema>;
 
 export interface IMember extends IMemberSchema {
     _id?: string,
-    save: ()=> Promise<void>
+    save: ()=> Promise<void> | undefined
 }
 
 const Member = models.Member || model('Member', MemberSchema);

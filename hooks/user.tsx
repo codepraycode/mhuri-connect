@@ -1,8 +1,8 @@
 'use client';
 import { useState, useRef } from "react";
 import { useSession } from 'next-auth/react';
+import { IUserHook, ObjectString, User } from "@utils/types";
 import { IMember } from "@models/member";
-import { IUserHook, ObjectString } from "@utils/types";
 
 
 export const userHook = ():IUserHook => {
@@ -13,9 +13,14 @@ export const userHook = ():IUserHook => {
 	// Status includes: loading, unauthenticated, authenticated.
 
 	// console.log("Session", session, status);
+
+	const sessionUser = session?.user;
+
+	const user = (sessionUser as User);
     
-    const [user, setUser] = useState<IMember | null>(null);
-    const [claims, setClaims] = useState(()=>user && user.claims || []);
+    // const [user, setUser] = useState<User>(userData);
+	const [claims, setClaims] = useState(user?.claims || []);
+    // const [claims, setClaims] = useState(()=>user && user.claims || []);
 
 	const updateTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -32,35 +37,39 @@ export const userHook = ():IUserHook => {
 		setClaims(()=> updatedClaims);
 
 		// Using debounce method
-        // updateTimeout.current = setTimeout(()=>submitClaims(updatedClaims), 500)
+        updateTimeout.current = setTimeout(()=>submitClaims(updatedClaims), 500)
 	}
 
-    // const submitClaims = (values: ObjectString[]) => {
-	// 	// console.log("Submitting claims", values);
-	// 	fetch('/api/members', {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"Content-type": 'application.json'
-	// 		},
-	// 		body: JSON.stringify({
-	// 			id: user?._id || _id,
-	// 			claims: values
-	// 		})
-	// 	})
-	// 	.then((res)=>res.json())
-	// 	.then((res)=>{
-    //         console.log("REs",res);
-    //         setUser(()=>res.data);
-    //     })
-	// 	.catch((e)=>console.error("Err:>", e))
+    const submitClaims = (values: ObjectString[]) => {
+		// console.log("Submitting claims", values);
+		fetch('/api/members', {
+			method: "POST",
+			headers: {
+				"Content-type": 'application.json'
+			},
+			body: JSON.stringify({
+				id: user?._id,
+				claims: values
+			})
+		})
+		.then((res)=>res.json())
+		.then((res)=>{
+            console.log("REs",res);
+            // setUser(()=>res.data);
+        })
+		.catch((e)=>console.error("Err:>", e))
 
-	// 	return values;
-	// }
+		return values;
+	}
 
 
 
     return {
-		user: null,
+		user: !user ? null : {
+			...user,
+			claims,
+			isAdmin: user?.isAdmin || false
+		},
 		status,
 
 		updateClaims,

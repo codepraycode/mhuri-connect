@@ -10,6 +10,7 @@ export type PayloadError = null | {
 export type authStatus = 'loading' | 'unauthenticated' | 'authenticated';
 
 export type ObjectString = Types.ObjectId;
+export type User = IMember | null;
 
 // Components
 
@@ -62,11 +63,15 @@ export interface ProviderProps {
     session?: any
 }
 
-
+export interface UserStatusProps {
+    user: null | IMember,
+    isLoading: boolean,
+    isAuthenticated: boolean
+}
 
 // Hooks
 export interface IUserHook {
-    user: IMember | null,
+    user: User,
     updateClaims: (id: ObjectString) =>void,
     status: authStatus
 }
