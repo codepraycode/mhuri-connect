@@ -5,7 +5,8 @@ const isProduction: boolean = env.NODE_ENV === 'production';
 
 // Database
 const MONGODB_URI = env.MONGODB_URI || "";
-const DB_NAME = isProduction ? "oila_db" : "oila_test_db";
+// const DB_NAME = isProduction ? "oila_db" : "oila_test_db";
+const DB_NAME = "oila_test_db";
 
 // NEXT Env
 const NEXTAUTH_URL = env.NEXTAUTH_URL;
