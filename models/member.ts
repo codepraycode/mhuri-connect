@@ -70,6 +70,12 @@ const MemberSchema = new Schema({
     dateOfBirth: {
         type: Schema.Types.Date,
     },
+    level: {
+        type: Schema.Types.Number,
+    },
+    department: {
+        type: Schema.Types.String,
+    },
     isAdmin: {
         type: Schema.Types.Boolean,
         default: false,
@@ -84,7 +90,7 @@ type IMemberSchema = InferSchemaType<typeof MemberSchema>;
 
 export interface IMember extends IMemberSchema {
     _id?: string,
-    save: ()=> Promise<void>
+    save: ()=> Promise<void> | undefined
 }
 
 const Member = models.Member || model('Member', MemberSchema);

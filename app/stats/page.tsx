@@ -88,6 +88,7 @@ export default function Home() {
 				selections={claims}
 				onSelect={updateClaims}
 				user={user}
+				isAdmin={true}
 			/>;
 
 	return (
