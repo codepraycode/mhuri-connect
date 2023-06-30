@@ -14,7 +14,7 @@ const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundCli
     useEffect(()=>{
         (()=>{
             // console.log(modal);
-            if (!document) return;
+            // if (!document) return;
             // const modal = document.querySelector('dialog');
             if (isOpen) {
                 try{
