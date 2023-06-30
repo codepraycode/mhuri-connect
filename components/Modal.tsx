@@ -3,7 +3,7 @@
 
 import { ModalProps } from "@utils/types";
 import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
+// import { createPortal } from "react-dom";
 
 
 
@@ -48,29 +48,22 @@ const Modal = ({children, open:isOpen, userCanClose, disableCloseOnBackgroundCli
 
 
     return (
-        <>
+        <dialog ref={modalRef}>
             {
-                createPortal(
-                    <dialog ref={modalRef}>
-                        {
-                            userCanClose && (
+                userCanClose && (
 
-                                <span
-                                    id="closeBtn"
-                                    onClick={()=>{
-                                        if (onClose) onClose();
+                    <span
+                        id="closeBtn"
+                        onClick={()=>{
+                            if (onClose) onClose();
 
-                                        closeModal()
-                                    }}
-                                ></span>
-                            )
-                        }
-                        {children}
-                    </dialog>,
-                    document.body,
+                            closeModal()
+                        }}
+                    ></span>
                 )
             }
-        </>
+            {children}
+        </dialog>
     )
 }
 export default Modal
